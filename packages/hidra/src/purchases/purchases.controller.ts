@@ -1,7 +1,5 @@
-/* eslint-disable prettier/prettier */
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { AppService } from './app.service';
 
 // interface KafkaResponse {
 //   id: string,
@@ -16,8 +14,8 @@ import { AppService } from './app.service';
 // }
 
 @Controller()
-export class AppController {
-  // @Client({
+export class PurchasesController {
+  // @Client({//
   //   transport: Transport.KAFKA,
   //   options: {
   //     client: {
@@ -42,11 +40,9 @@ export class AppController {
   //   })
   // }
 
-  constructor(private readonly appService: AppService) {}
-
   @MessagePattern('hidra.purchase') // Our topic name
-  getPurchase(@Payload() message) {
-    console.log(message.value);
+  getPurchases(@Payload() message) {
+    console.log(message);
     return 'Hello World';
   }
 }
