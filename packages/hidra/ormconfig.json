@@ -5,6 +5,7 @@
     "username": "docker",
     "password": "docker",
     "database": "hidra",
+    "autoLoadEntities": true,
     "entities": ["./src/models/*.ts"],
     "migrations": ["./src/database/migrations/*.ts"],
     "cli": {
