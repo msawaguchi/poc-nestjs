@@ -1,21 +1,13 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './purchases.controller';
 import { AppService } from './app.service';
-
-import { TypeOrmModule } from '@nestjs/typeorm';
-
-import { ProductController } from './product/product.controller';
 import { ProductService } from './product/product.service';
-import { ProductModule } from './product/product.module';
+import { CustomersService } from './customers/customers.service';
+import { PurchaseService } from './purchase/purchase.service';
 
 @Module({
-  imports: [
-    TypeOrmModule.forRoot({
-      keepConnectionAlive: true,
-    }),
-    ProductModule,
-  ],
-  controllers: [AppController, ProductController],
-  providers: [AppService, ProductService],
+  imports: [],
+  controllers: [AppController],
+  providers: [AppService, ProductService, CustomersService, PurchaseService],
 })
 export class AppModule {}

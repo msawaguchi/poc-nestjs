@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://docker:docker@localhost:5432/hidra"
+}
+
+model customers {
+  id         String      @id @db.Uuid
+  name       String      @db.VarChar
+  email      String      @db.VarChar
+  street     String      @db.VarChar
+  city       String      @db.VarChar
+  state      String      @db.VarChar
+  created_at DateTime    @default(now()) @db.Timestamp(6)
+  updated_at DateTime    @default(now()) @db.Timestamp(6)
+  purchases  purchases[]
+}
+
+model migrations {
+  id        Int    @id @default(autoincrement())
+  timestamp BigInt
+  name      String @db.VarChar
+}
+
+model products {
+  id            String      @id @db.Uuid
+  amount        Decimal     @db.Decimal
+  type          String      @db.VarChar
+  product_name  String      @db.VarChar  
+  created_at    DateTime    @default(now()) @db.Timestamp(6)
+  updated_at    DateTime    @default(now()) @db.Timestamp(6)
+  purchases     purchases[]
+}
+
+model purchases {
+  id          String    @id @db.Uuid
+  customer_id String    @db.Uuid
+  product_id  String    @db.Uuid
+  created_at  DateTime  @default(now()) @db.Timestamp(6)
+  customers   customers @relation(fields: [customer_id], references: [id])
+  products    products  @relation(fields: [product_id], references: [id])
+}

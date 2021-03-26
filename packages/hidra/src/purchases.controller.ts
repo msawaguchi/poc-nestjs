@@ -1,7 +1,9 @@
 /* eslint-disable prettier/prettier */
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { AppService } from './app.service';
+import { ProductService } from './product/product.service';
+import { CustomersService } from './customers/customers.service';
+import { PurchaseService } from './purchase/purchase.service';
 
 // interface KafkaResponse {
 //   id: string,
@@ -42,11 +44,24 @@ export class AppController {
   //   })
   // }
 
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    private readonly productService: ProductService,
+    private readonly customersService: CustomersService,
+    private readonly purchaseService: PurchaseService
+  ) {}
 
   @MessagePattern('hidra.purchase') // Our topic name
-  getPurchase(@Payload() message) {
+  async getPurchase(@Payload() message) {
     console.log(message.value);
+
+    const productId = await this.productService.onCreate(message.value.product);
+    const customerId = await this.customersService.onCreate(message.value.customer);
+    await this.purchaseService.onCreate({
+      id: message.value.id,
+      customer_id: customerId,
+      product_id: productId,
+    })
+
     return 'Hello World';
   }
 }

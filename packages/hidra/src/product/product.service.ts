@@ -1,21 +1,50 @@
-import { Injectable } from '@nestjs/common';
-import { CreateProductDto } from './product.controller';
-import { getRepository } from 'typeorm';
-import Product from '../models/product.entity';
+import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
+import { PrismaClient } from '@prisma/client';
+import { v4 as uuidv4 } from 'uuid';
+
+interface Iproduct {
+  id: string;
+  amount: string;
+  type: string;
+}
 
 @Injectable()
-export class ProductService {
-  private readonly products: CreateProductDto[] = [];
-
-  create(product: CreateProductDto) {
-    console.log(product);
-    const productRepository = getRepository(Product);
-    productRepository.create(product);
+export class ProductService
+  extends PrismaClient
+  implements OnModuleInit, OnModuleDestroy {
+  async onModuleInit() {
+    await this.$connect();
   }
 
-  async findAll(): Promise<CreateProductDto[]> {
-    const productRepository = getRepository(Product);
-    const products = await productRepository.find();
-    return products;
+  async onModuleDestroy() {
+    await this.$disconnect();
+  }
+
+  async onCreate(product: Iproduct) {
+    const prisma = new PrismaClient();
+
+    const existProduct = await prisma.products.findFirst({
+      where: {
+        product_name: product.id,
+      },
+    });
+
+    if (existProduct) {
+      return existProduct.id;
+    }
+
+    try {
+      const newProduct = await prisma.products.create({
+        data: {
+          id: uuidv4(),
+          product_name: product.id,
+          amount: product.amount,
+          type: product.type,
+        },
+      });
+      return newProduct.id;
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
