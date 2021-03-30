@@ -10,7 +10,6 @@ export class CustomerMigration1616775909071 implements MigrationInterface {
             name: 'id',
             type: 'uuid',
             isPrimary: true,
-            generationStrategy: 'uuid',
           },
           {
             name: 'name',

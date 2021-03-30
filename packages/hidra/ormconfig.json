@@ -1,13 +1,13 @@
 {
-    "type": "postgres",
-    "host": "localhost",
-    "port": 5432,
-    "username": "docker",
-    "password": "docker",
-    "database": "hidra",
-    "entities": ["./src/models/*.ts"],
-    "migrations": ["./src/database/migrations/*.ts"],
-    "cli": {
-      "migrationsDir": "./src/database/migrations"
-    }
+  "type": "postgres",
+  "host": "127.0.0.1",
+  "port": 5432,
+  "username": "docker",
+  "password": "docker",
+  "database": "hidra",
+  "entities": ["dist/**/*.model.js"],
+  "migrations": ["dist/database/migrations/*.js"],
+  "cli": {
+    "migrationsDir": "src/database/migrations"
   }
+}
