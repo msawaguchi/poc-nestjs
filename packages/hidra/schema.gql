@@ -1,0 +1,91 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Customer {
+  id: String!
+  name: String!
+  email: String!
+  street: String!
+  city: String!
+  state: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+  purchases: [Purchase!]!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Purchase {
+  id: String!
+  customer_id: String!
+  product_id: String!
+  status: String!
+  customer: Customer!
+  product: Product!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+type Product {
+  id: String!
+  amount: Float!
+  type: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+  purchases: [Purchase!]!
+}
+
+type AuthType {
+  customer: Customer!
+  token: String!
+}
+
+type Query {
+  customer(id: String!): Customer
+  customers(data: CustomerPagination!): [Customer!]!
+  purchase(id: String!): Purchase!
+  purchases: [Purchase!]!
+  product(id: String!): Product
+  products: [Product!]!
+}
+
+input CustomerPagination {
+  limit: Float!
+  page: Float!
+}
+
+type Mutation {
+  login(data: AuthInput!): AuthType!
+  createCustomer(data: CustomerInput!): Customer!
+  createPurchase(purchase: PurchaseInput!): Purchase!
+  createProduct(data: ProductInput!): Product!
+}
+
+input AuthInput {
+  email: String!
+}
+
+input CustomerInput {
+  id: String!
+  email: String!
+  name: String!
+  street: String!
+  city: String!
+  state: String!
+}
+
+input PurchaseInput {
+  id: String!
+  customer_id: String!
+  product_id: String!
+}
+
+input ProductInput {
+  id: String!
+  amount: Float!
+  type: String!
+}

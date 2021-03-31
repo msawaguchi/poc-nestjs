@@ -8,17 +8,16 @@ export class ProductMigration1616775924033 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'uuid',
+            type: 'varchar',
             isPrimary: true,
-            generationStrategy: 'uuid',
           },
           {
             name: 'amount',
-            type: 'varchar',
+            type: 'numeric',
           },
           {
             name: 'type',
-            type: 'numeric',
+            type: 'varchar',
           },
           {
             name: 'created_at',

@@ -15,7 +15,6 @@ export class PurchaseMigration1616776306122 implements MigrationInterface {
             name: 'id',
             type: 'uuid',
             isPrimary: true,
-            generationStrategy: 'uuid',
           },
           {
             name: 'customer_id',
@@ -23,10 +22,19 @@ export class PurchaseMigration1616776306122 implements MigrationInterface {
           },
           {
             name: 'product_id',
-            type: 'uuid',
+            type: 'varchar',
+          },
+          {
+            name: 'status',
+            type: 'varchar',
           },
           {
             name: 'created_at',
+            type: 'timestamp',
+            default: 'now()',
+          },
+          {
+            name: 'updated_at',
             type: 'timestamp',
             default: 'now()',
           },
