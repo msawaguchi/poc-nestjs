@@ -13,7 +13,7 @@ import { Product } from './../product/product.model';
 
 import { PurchaseService } from './purchase.service';
 import { Purchase } from './purchase.model';
-import { PurchaseInput } from './purchase.input';
+import { DeletePurchaseInput, PurchaseInput } from './purchase.input';
 
 @Resolver(() => Purchase)
 export class PurchaseResolver {
@@ -48,5 +48,13 @@ export class PurchaseResolver {
     @Args('purchase') purchase: PurchaseInput,
   ): Promise<Purchase> {
     return await this.purchaseService.create(purchase);
+  }
+
+  @Mutation(() => Purchase)
+  async refund(@Args('refund') refund: DeletePurchaseInput): Promise<void> {
+    return await this.purchaseService.refund({
+      customer_id: refund.customer_id,
+      id: refund.id,
+    });
   }
 }

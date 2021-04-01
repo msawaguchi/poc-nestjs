@@ -9,6 +9,8 @@ type Customer {
   street: String!
   city: String!
   state: String!
+  ignite: String!
+  experts_club: String!
   created_at: DateTime!
   updated_at: DateTime!
   purchases: [Purchase!]!
@@ -62,6 +64,7 @@ type Mutation {
   login(data: AuthInput!): AuthType!
   createCustomer(data: CustomerInput!): Customer!
   createPurchase(purchase: PurchaseInput!): Purchase!
+  refund(refund: DeletePurchaseInput!): Purchase!
   createProduct(data: ProductInput!): Product!
 }
 
@@ -76,12 +79,19 @@ input CustomerInput {
   street: String!
   city: String!
   state: String!
+  ignite: String!
+  experts: String!
 }
 
 input PurchaseInput {
   id: String!
   customer_id: String!
   product_id: String!
+}
+
+input DeletePurchaseInput {
+  id: String!
+  customer_id: String!
 }
 
 input ProductInput {

@@ -32,8 +32,8 @@ export class PurchaseController {
   //     consumer: {
   //       groupId: 'ignite-consumer',
   //       allowAutoTopicCreation: true,
-  //     }
-  //   }
+  //     },
+  //   },
   // })
 
   // private client: ClientKafka;
@@ -46,7 +46,6 @@ export class PurchaseController {
   //     await this.client.connect();
   //   })
   // }
-
   private kafka: Kafka;
 
   constructor(
@@ -55,14 +54,14 @@ export class PurchaseController {
     @Inject(PurchaseService) private purchaseService: PurchaseService,
   ) {
     this.kafka = new Kafka({
-      clientId: 'custom-consumer',
+      clientId: 'sample-producer',
       brokers: ['localhost:9092'],
     });
   }
 
   @MessagePattern('hidra.purchase') // Our topic name
+  @MessagePattern('ignite') // Our topic name
   async getPurchase(@Payload() message: Purchase) {
-    console.log('oi');
     const product = await this.productService.findOne(message.value.product.id);
     const customer = await this.customerService.findOne(
       message.value.customer.id,
@@ -80,6 +79,8 @@ export class PurchaseController {
         city: message.value.customer.address.city,
         state: message.value.customer.address.state,
         street: message.value.customer.address.street,
+        experts: message.value.product.id === 'experts' ? 'access' : '',
+        ignite: message.value.product.id === 'ignite' ? 'access' : '',
       });
     }
 
@@ -89,9 +90,14 @@ export class PurchaseController {
       product_id: message.value.product.id,
     });
 
-    this.kafka.producer().send({
-      topic: 'ignite',
-      messages: [{ value: 'Compra realizada' }],
-    });
+    try {
+      await this.kafka.producer().connect();
+      await this.kafka.producer().send({
+        topic: 'ignite',
+        messages: [{ value: 'Compra realizada' }],
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 }

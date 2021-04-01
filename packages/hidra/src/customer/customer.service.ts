@@ -11,6 +11,10 @@ export class CustomerService {
     private customerService: Repository<Customer>,
   ) {}
 
+  save(data: CustomerInput): Promise<Customer> {
+    return this.customerService.save(data);
+  }
+
   create(data: CustomerInput): Promise<Customer> {
     return this.customerService.save(data);
   }

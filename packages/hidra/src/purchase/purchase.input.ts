@@ -14,4 +14,7 @@ export class PurchaseInput {
 export class DeletePurchaseInput {
   @Field()
   readonly id: string;
+
+  @Field()
+  readonly customer_id: string;
 }

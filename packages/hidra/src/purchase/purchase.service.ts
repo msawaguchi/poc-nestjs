@@ -1,7 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { Purchase } from './purchase.model';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+
+import { CustomerService } from './../customer/customer.service';
 import { DeletePurchaseInput, PurchaseInput } from './purchase.input';
 
 @Injectable()
@@ -9,6 +11,7 @@ export class PurchaseService {
   constructor(
     @InjectRepository(Purchase)
     private purchaseRepository: Repository<Purchase>,
+    @Inject(CustomerService) private customerService: CustomerService,
   ) {}
 
   create(data: PurchaseInput): Promise<Purchase> {
@@ -21,14 +24,26 @@ export class PurchaseService {
   }
 
   async refund(data: DeletePurchaseInput): Promise<void> {
-    const purchase = await this.purchaseRepository.findOne(data.id);
+    const customer = await this.customerService.findOne(data.customer_id);
+
+    const purchase = await this.purchaseRepository.findOne({
+      where: {
+        customer_id: data.customer_id,
+        id: data.id,
+      },
+    });
 
     if (!purchase) {
       throw new Error('This purchase does not exists');
     }
 
+    purchase.product_id === 'ignite'
+      ? (customer.ignite = 'no-access')
+      : (customer.experts_club = 'no-access');
+
     purchase.status = 'canceled';
 
+    this.customerService.save(customer);
     this.purchaseRepository.save(purchase);
   }
 
