@@ -82,6 +82,7 @@ input PurchaseInput {
   id: String!
   customer_id: String!
   product_id: String!
+  status: String!
 }
 
 input ProductInput {

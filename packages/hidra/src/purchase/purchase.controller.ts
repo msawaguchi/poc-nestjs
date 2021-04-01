@@ -87,6 +87,7 @@ export class PurchaseController {
       id: message.value.id,
       customer_id: message.value.customer.id,
       product_id: message.value.product.id,
+      status: 'success',
     });
 
     this.kafka.producer().send({

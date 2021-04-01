@@ -11,13 +11,17 @@ export class PurchaseService {
     private purchaseRepository: Repository<Purchase>,
   ) {}
 
-  create(data: PurchaseInput): Promise<Purchase> {
-    return this.purchaseRepository.save({
+  async create(data: PurchaseInput): Promise<Purchase> {
+    const purchase = await this.purchaseRepository.create({
       id: data.id,
       customer_id: data.customer_id,
       product_id: data.product_id,
       status: 'success',
     });
+
+    this.purchaseRepository.save(purchase);
+
+    return purchase;
   }
 
   async refund(data: DeletePurchaseInput): Promise<void> {
@@ -32,8 +36,11 @@ export class PurchaseService {
     this.purchaseRepository.save(purchase);
   }
 
-  findAll(): Promise<Purchase[]> {
-    return this.purchaseRepository.find();
+  async findAll(): Promise<Purchase[]> {
+    const purchases = await this.purchaseRepository.find();
+
+    console.log(purchases);
+    return purchases;
   }
 
   findByCustomer(id: string): Promise<Purchase[]> {
