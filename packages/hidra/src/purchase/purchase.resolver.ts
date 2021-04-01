@@ -1,15 +1,5 @@
-import {
-  Resolver,
-  Args,
-  Query,
-  ResolveField,
-  Parent,
-  Mutation,
-} from '@nestjs/graphql';
+import { Resolver, Args, Query, Mutation } from '@nestjs/graphql';
 import { Inject } from '@nestjs/common';
-
-import { Customer } from './../customer/customer.model';
-import { Product } from './../product/product.model';
 
 import { PurchaseService } from './purchase.service';
 import { Purchase } from './purchase.model';
@@ -26,15 +16,13 @@ export class PurchaseResolver {
     return await this.purchaseService.findOne(id);
   }
 
-  @ResolveField(() => Customer)
-  async customer(@Parent() customer) {
-    const { customer_id } = customer;
+  @Query(() => [Purchase])
+  async purchaseByCustomer(@Args('customer_id') customer_id: string) {
     return this.purchaseService.findByCustomer(customer_id);
   }
 
-  @ResolveField(() => Product)
-  async product(@Parent() product) {
-    const { product_id } = product;
+  @Query(() => [Purchase])
+  async purchaseByProduct(@Args('product_id') product_id: string) {
     return this.purchaseService.findByProduct(product_id);
   }
 

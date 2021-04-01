@@ -1,11 +1,4 @@
-import {
-  Resolver,
-  Args,
-  Query,
-  ResolveField,
-  Parent,
-  Mutation,
-} from '@nestjs/graphql';
+import { Resolver, Args, Query, Mutation } from '@nestjs/graphql';
 import { Inject } from '@nestjs/common';
 
 import { ProductService } from './product.service';

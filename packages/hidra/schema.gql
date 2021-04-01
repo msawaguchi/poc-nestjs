@@ -50,6 +50,8 @@ type Query {
   customer(id: String!): Customer
   customers(data: CustomerPagination!): [Customer!]!
   purchase(id: String!): Purchase!
+  purchaseByCustomer(customer_id: String!): [Purchase!]!
+  purchaseByProduct(product_id: String!): [Purchase!]!
   purchases: [Purchase!]!
   product(id: String!): Product
   products: [Product!]!

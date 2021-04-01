@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+
 import { PurchaseResolver } from './purchase.resolver';
 import { PurchaseService } from './purchase.service';
 import { PurchaseInput } from './purchase.input';
@@ -26,11 +27,25 @@ describe('PurchaseResolver', () => {
               customer_id: '1',
               product_id: 'ignite',
             })),
-            create: jest.fn((cat: PurchaseInput) => ({
+            create: jest.fn((purchase: PurchaseInput) => ({
               id: '10',
-              ...cat,
+              ...purchase,
               status: 'success',
             })),
+            findByProduct: jest.fn((product_id: string) => [
+              {
+                id: '1',
+                customer_id: '1',
+                product_id,
+              },
+            ]),
+            findByCustomer: jest.fn((customer_id: string) => [
+              {
+                id: '1',
+                customer_id,
+                product_id: 'ignite',
+              },
+            ]),
           }),
         },
       ],
@@ -46,6 +61,49 @@ describe('PurchaseResolver', () => {
   describe('purchases', () => {
     it('should get the purchases array', async () => {
       expect(await resolver.purchases()).toEqual([
+        {
+          id: '1',
+          customer_id: '1',
+          product_id: 'ignite',
+        },
+      ]);
+    });
+
+    it('should get the purchase by id', async () => {
+      expect(await resolver.purchase('1')).toEqual({
+        id: '1',
+        customer_id: '1',
+        product_id: 'ignite',
+      });
+    });
+
+    it('should create purchase', async () => {
+      expect(
+        await resolver.createPurchase({
+          id: '1',
+          customer_id: '1',
+          product_id: 'ignite',
+        }),
+      ).toEqual({
+        id: '1',
+        customer_id: '1',
+        product_id: 'ignite',
+        status: 'success',
+      });
+    });
+
+    it('should get the purchases by product', async () => {
+      expect(await resolver.purchaseByProduct('ignite')).toEqual([
+        {
+          id: '1',
+          customer_id: '1',
+          product_id: 'ignite',
+        },
+      ]);
+    });
+
+    it('should get the purchases by customer', async () => {
+      expect(await resolver.purchaseByCustomer('1')).toEqual([
         {
           id: '1',
           customer_id: '1',
