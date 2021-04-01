@@ -15,6 +15,10 @@ export class AuthService {
   async validateUser(data: AuthInput): Promise<AuthType> {
     const customer = await this.customerService.findByEmail(data.email);
 
+    if (customer.experts_club !== 'access' && customer.ignite !== 'access') {
+      throw new Error('This user can not access the application');
+    }
+
     const token = await this.jwtToken(customer);
 
     return {

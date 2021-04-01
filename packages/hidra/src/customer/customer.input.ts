@@ -14,6 +14,10 @@ export class CustomerInput {
   readonly city: string;
   @Field()
   readonly state: string;
+  @Field()
+  readonly ignite?: string;
+  @Field()
+  readonly experts?: string;
 }
 
 @InputType()

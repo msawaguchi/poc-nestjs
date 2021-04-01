@@ -36,6 +36,14 @@ export class Customer {
   @Column()
   state: string;
 
+  @Field()
+  @Column()
+  ignite: string;
+
+  @Field()
+  @Column()
+  experts_club: string;
+
   @OneToMany(() => Purchase, (purchase) => purchase.customer)
   purchases: Promise<Purchase[]>;
 

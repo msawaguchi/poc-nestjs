@@ -32,6 +32,16 @@ export class CustomerMigration1616775909071 implements MigrationInterface {
             type: 'varchar',
           },
           {
+            name: 'ignite',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
+            name: 'experts_club',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',
