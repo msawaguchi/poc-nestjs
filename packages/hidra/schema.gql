@@ -13,7 +13,6 @@ type Customer {
   experts_club: String!
   created_at: DateTime!
   updated_at: DateTime!
-  purchases: [Purchase!]!
 }
 
 """
@@ -38,7 +37,6 @@ type Product {
   type: String!
   created_at: DateTime!
   updated_at: DateTime!
-  purchases: [Purchase!]!
 }
 
 type AuthType {
@@ -89,7 +87,6 @@ input PurchaseInput {
   id: String!
   customer_id: String!
   product_id: String!
-  status: String!
 }
 
 input DeletePurchaseInput {

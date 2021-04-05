@@ -8,6 +8,7 @@ import { CustomerModule } from './customer/customer.module';
 import { ProductModule } from './product/product.module';
 import { PurchaseModule } from './purchase/purchase.module';
 import { GraphQLModule } from '@nestjs/graphql';
+import { KafkaService } from './purchase/kafka.service';
 
 @Module({
   imports: [
@@ -31,6 +32,6 @@ import { GraphQLModule } from '@nestjs/graphql';
     }),
   ],
   controllers: [PurchaseController],
-  providers: [AppService],
+  providers: [AppService, KafkaService],
 })
 export class AppModule {}

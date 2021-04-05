@@ -1,10 +1,11 @@
 import { Controller, Inject } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { Kafka } from 'kafkajs';
 
 import { ProductService } from '../product/product.service';
 import { PurchaseService } from './purchase.service';
 import { CustomerService } from '../customer/customer.service';
+import { KafkaService } from './kafka.service';
+import { KafkaPayload } from './kafka.message';
 
 interface Purchase {
   value: {
@@ -20,48 +21,26 @@ interface Purchase {
   };
 }
 
+interface Refund {
+  topic: string;
+  value: {
+    id: string;
+    purchaseId: string;
+    createdAt: string;
+  };
+}
+
 @Controller()
 export class PurchaseController {
-  // @Client({
-  //   transport: Transport.KAFKA,
-  //   options: {
-  //     client: {
-  //       clientId: 'ignite',
-  //       brokers: ['localhost:9092'],
-  //     },
-  //     consumer: {
-  //       groupId: 'ignite-consumer',
-  //       allowAutoTopicCreation: true,
-  //     },
-  //   },
-  // })
-
-  // private client: ClientKafka;
-
-  // async onModuleInit() {
-  //   const requestPatters = ['ignite', 'experts'];
-
-  //   requestPatters.forEach(async pattern => {
-  //     this.client.subscribeToResponseOf(pattern);
-  //     await this.client.connect();
-  //   })
-  // }
-  private kafka: Kafka;
-
   constructor(
     @Inject(CustomerService) private customerService: CustomerService,
     @Inject(ProductService) private productService: ProductService,
     @Inject(PurchaseService) private purchaseService: PurchaseService,
-  ) {
-    this.kafka = new Kafka({
-      clientId: 'sample-producer',
-      brokers: ['localhost:9092'],
-    });
-  }
+    @Inject(KafkaService) private readonly kafkaService: KafkaService,
+  ) {}
 
-  @MessagePattern('hidra.purchase') // Our topic name
-  @MessagePattern('ignite') // Our topic name
-  async getPurchase(@Payload() message: Purchase) {
+  @MessagePattern('hidra.purchase')
+  async createPurchase(@Payload() message: Purchase) {
     const product = await this.productService.findOne(message.value.product.id);
     const customer = await this.customerService.findOne(
       message.value.customer.id,
@@ -88,17 +67,42 @@ export class PurchaseController {
       id: message.value.id,
       customer_id: message.value.customer.id,
       product_id: message.value.product.id,
-      status: 'success',
     });
 
     try {
-      await this.kafka.producer().connect();
-      await this.kafka.producer().send({
-        topic: 'ignite',
-        messages: [{ value: 'Compra realizada' }],
-      });
+      const payload: KafkaPayload = {
+        body: `Compra realizada, acesso concedido ao cliente: ${message.value.customer.id}`,
+        messageType: 'Purchase',
+        topicName: message.value.product.id,
+      };
+
+      await this.kafkaService.sendMessage(message.value.product.id, payload);
     } catch (err) {
-      console.log(err);
+      throw new Error('Houve um erro ao enviar mensagem para o Kafka');
+    }
+  }
+
+  @MessagePattern('hidra.refund')
+  async refundPurchase(@Payload() message: Refund) {
+    const purchase = await this.purchaseService.findOne(
+      message.value.purchaseId,
+    );
+
+    this.purchaseService.refund({
+      id: message.value.purchaseId,
+      customer_id: purchase.customer_id,
+    });
+
+    try {
+      const payload: KafkaPayload = {
+        body: `Reembolso realizado, acesso ao cliente: ${purchase.customer_id} foi retirado`,
+        messageType: 'Refund',
+        topicName: purchase.product_id,
+      };
+
+      await this.kafkaService.sendMessage(purchase.product_id, payload);
+    } catch (err) {
+      throw new Error('Houve um erro ao enviar mensagem para o Kafka');
     }
   }
 }
