@@ -27,13 +27,14 @@ export class PurchaseService {
     return purchase;
   }
 
-  async refund(data: DeletePurchaseInput): Promise<void> {
+  async refund(data: DeletePurchaseInput): Promise<Purchase> {
     const customer = await this.customerService.findOne(data.customer_id);
 
     const purchase = await this.purchaseRepository.findOne({
       where: {
         customer_id: data.customer_id,
         id: data.id,
+        status: 'success',
       },
     });
 
@@ -49,12 +50,13 @@ export class PurchaseService {
 
     this.customerService.save(customer);
     this.purchaseRepository.save(purchase);
+
+    return purchase;
   }
 
   async findAll(): Promise<Purchase[]> {
     const purchases = await this.purchaseRepository.find();
 
-    console.log(purchases);
     return purchases;
   }
 

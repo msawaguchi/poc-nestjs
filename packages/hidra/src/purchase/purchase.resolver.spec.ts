@@ -77,21 +77,6 @@ describe('PurchaseResolver', () => {
       });
     });
 
-    it('should create purchase', async () => {
-      expect(
-        await resolver.createPurchase({
-          id: '1',
-          customer_id: '1',
-          product_id: 'ignite',
-        }),
-      ).toEqual({
-        id: '1',
-        customer_id: '1',
-        product_id: 'ignite',
-        status: 'success',
-      });
-    });
-
     it('should get the purchases by product', async () => {
       expect(await resolver.purchaseByProduct('ignite')).toEqual([
         {

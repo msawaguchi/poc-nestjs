@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+
 import { ProductResolver } from './product.resolver';
 import { ProductService } from './product.service';
 import { ProductInput } from './product.input';
@@ -70,19 +71,6 @@ describe('ProductResolver', () => {
         id,
         amount: 100,
         type: 'onetime',
-      });
-    });
-
-    it('should create a new product', async () => {
-      const data = {
-        id: 'ignite',
-        amount: 100,
-        type: 'onetime',
-      };
-      expect(await resolver.createProduct(data)).toEqual({
-        id: data.id,
-        amount: data.amount,
-        type: data.type,
       });
     });
   });

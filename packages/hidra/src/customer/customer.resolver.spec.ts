@@ -113,29 +113,5 @@ describe('CustomerResolver', () => {
         ignite: 'ignite',
       });
     });
-
-    it('should create a new customer', async () => {
-      const data = {
-        id: 'id_test_createde_customer',
-        name: 'test1',
-        email: 'test1@test.com',
-        street: 'street',
-        city: 'city',
-        state: 'state',
-        experts: 'experts',
-        ignite: 'ignite',
-      };
-
-      expect(await resolver.createCustomer(data)).toEqual({
-        id: data.id,
-        name: data.name,
-        email: data.email,
-        street: data.email,
-        city: data.city,
-        state: data.state,
-        experts: data.experts,
-        ignite: data.ignite,
-      });
-    });
   });
 });

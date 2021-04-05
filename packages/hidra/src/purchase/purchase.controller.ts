@@ -88,6 +88,10 @@ export class PurchaseController {
       message.value.purchaseId,
     );
 
+    if (!purchase) {
+      throw new Error('This purchase does not exists');
+    }
+
     this.purchaseService.refund({
       id: message.value.purchaseId,
       customer_id: purchase.customer_id,
