@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
-import { PurchaseController } from './purchase/purchase.controller';
-import { AppService } from './app.service';
-
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthModule } from './auth/auth.module';
-import { CustomerModule } from './customer/customer.module';
-import { ProductModule } from './product/product.module';
-import { PurchaseModule } from './purchase/purchase.module';
 import { GraphQLModule } from '@nestjs/graphql';
-import { KafkaService } from './purchase/kafka.service';
+import { AppService } from './app.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
+import { AuthModule } from './modules/auth.module';
+import { CustomerModule } from './modules/customer.module';
+import { ProductModule } from './modules/product.module';
+import { PurchaseModule } from './modules/purchase.module';
+import { KafkaService } from './services/kafka.service';
+import { PurchaseController } from './controllers/purchase.controller';
 
 @Module({
   imports: [

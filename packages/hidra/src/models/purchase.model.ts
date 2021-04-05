@@ -8,8 +8,8 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql';
-import { Customer } from '../customer/customer.model';
-import { Product } from '../product/product.model';
+import { Customer } from './customer.model';
+import { Product } from './product.model';
 
 @ObjectType()
 @Entity({ name: 'purchases' })

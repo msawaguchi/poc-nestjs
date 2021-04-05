@@ -1,9 +1,9 @@
-import { PurchaseModule } from './../purchase/purchase.module';
-import { Product } from './product.model';
+import { PurchaseModule } from '../modules/purchase.module';
+import { Product } from '../models/product.model';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module, forwardRef } from '@nestjs/common';
-import { ProductService } from './product.service';
-import { ProductResolver } from './product.resolver';
+import { ProductService } from '../services/product.service';
+import { ProductResolver } from '../resolvers/product.resolver';
 
 @Module({
   imports: [

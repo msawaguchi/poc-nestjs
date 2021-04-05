@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CustomerResolver } from './customer.resolver';
-import { CustomerService } from './customer.service';
-import { CustomerInput, CustomerPagination } from './customer.input';
+import { CustomerService } from '../services/customer.service';
+import { CustomerInput, CustomerPagination } from '../inputs/customer.input';
 
 describe('CustomerResolver', () => {
   let resolver: CustomerResolver;

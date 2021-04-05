@@ -1,12 +1,12 @@
 import { Resolver, Args, Query, Mutation } from '@nestjs/graphql';
 import { Inject, UseGuards } from '@nestjs/common';
 
-import { GqlAuthGuard } from '../auth/jwt-auth.guard';
-import { PurchaseService } from './purchase.service';
-import { Purchase } from './purchase.model';
-import { DeletePurchaseInput } from './purchase.input';
-import { KafkaService } from './kafka.service';
-import { KafkaPayload } from './kafka.message';
+import { GqlAuthGuard } from '../common/jwt-auth.guard';
+import { KafkaPayload } from '../common/kafka.message';
+import { Purchase } from '../models/purchase.model';
+import { DeletePurchaseInput } from '../inputs/purchase.input';
+import { PurchaseService } from '../services/purchase.service';
+import { KafkaService } from '../services/kafka.service';
 
 @Resolver(() => Purchase)
 export class PurchaseResolver {

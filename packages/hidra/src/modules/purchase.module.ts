@@ -1,14 +1,14 @@
-import { Purchase } from './purchase.model';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module, forwardRef } from '@nestjs/common';
 
-import { CustomerModule } from './../customer/customer.module';
-import { ProductModule } from './../product/product.module';
+import { CustomerModule } from './customer.module';
+import { ProductModule } from './product.module';
 
-import { PurchaseService } from './purchase.service';
-import { KafkaService } from './kafka.service';
-import { PurchaseController } from './purchase.controller';
-import { PurchaseResolver } from './purchase.resolver';
+import { KafkaService } from '../services/kafka.service';
+import { PurchaseService } from '../services/purchase.service';
+import { PurchaseController } from '../controllers/purchase.controller';
+import { PurchaseResolver } from '../resolvers/purchase.resolver';
+import { Purchase } from '../models/purchase.model';
 
 @Module({
   imports: [

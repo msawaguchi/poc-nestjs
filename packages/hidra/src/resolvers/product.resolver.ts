@@ -1,9 +1,9 @@
 import { Resolver, Args, Query } from '@nestjs/graphql';
 import { Inject, UseGuards } from '@nestjs/common';
 
-import { GqlAuthGuard } from '../auth/jwt-auth.guard';
-import { ProductService } from './product.service';
-import { Product } from './product.model';
+import { GqlAuthGuard } from '../common/jwt-auth.guard';
+import { Product } from '../models/product.model';
+import { ProductService } from '../services/product.service';
 
 @Resolver(() => Product)
 export class ProductResolver {

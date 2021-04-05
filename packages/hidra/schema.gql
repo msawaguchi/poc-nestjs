@@ -2,15 +2,10 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Customer {
+type Product {
   id: String!
-  name: String!
-  email: String!
-  street: String!
-  city: String!
-  state: String!
-  ignite: String!
-  experts_club: String!
+  amount: Float!
+  type: String!
   created_at: DateTime!
   updated_at: DateTime!
 }
@@ -31,10 +26,15 @@ type Purchase {
   updated_at: DateTime!
 }
 
-type Product {
+type Customer {
   id: String!
-  amount: Float!
-  type: String!
+  name: String!
+  email: String!
+  street: String!
+  city: String!
+  state: String!
+  ignite: String!
+  experts_club: String!
   created_at: DateTime!
   updated_at: DateTime!
 }

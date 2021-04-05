@@ -1,10 +1,10 @@
 import { Resolver, Args, Query } from '@nestjs/graphql';
 import { Inject, UseGuards } from '@nestjs/common';
 
-import { GqlAuthGuard } from '../auth/jwt-auth.guard';
-import { CustomerService } from './customer.service';
-import { Customer } from './customer.model';
-import { CustomerPagination } from './customer.input';
+import { GqlAuthGuard } from '../common/jwt-auth.guard';
+import { CustomerService } from '../services/customer.service';
+import { Customer } from '../models/customer.model';
+import { CustomerPagination } from '../inputs/customer.input';
 
 @Resolver(() => Customer)
 export class CustomerResolver {

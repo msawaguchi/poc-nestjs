@@ -1,11 +1,11 @@
 import { Controller, Inject } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
-import { ProductService } from '../product/product.service';
-import { PurchaseService } from './purchase.service';
-import { CustomerService } from '../customer/customer.service';
-import { KafkaService } from './kafka.service';
-import { KafkaPayload } from './kafka.message';
+import { ProductService } from '../services/product.service';
+import { PurchaseService } from '../services/purchase.service';
+import { CustomerService } from '../services/customer.service';
+import { KafkaService } from '../services/kafka.service';
+import { KafkaPayload } from '../common/kafka.message';
 
 interface Purchase {
   value: {

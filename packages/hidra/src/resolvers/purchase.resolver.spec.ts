@@ -1,8 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { PurchaseResolver } from './purchase.resolver';
-import { PurchaseService } from './purchase.service';
-import { PurchaseInput } from './purchase.input';
+import { PurchaseService } from '../services/purchase.service';
+import { KafkaService } from '../services/kafka.service';
+import { PurchaseInput } from '../inputs/purchase.input';
 
 describe('PurchaseResolver', () => {
   let resolver: PurchaseResolver;
@@ -11,6 +12,7 @@ describe('PurchaseResolver', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         PurchaseResolver,
+        KafkaService,
         {
           provide: PurchaseService,
           // using a factory just because

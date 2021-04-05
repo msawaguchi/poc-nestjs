@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { Customer } from '../customer/customer.model';
-import { CustomerService } from '../customer/customer.service';
-import { AuthInput } from './auth.input';
-import { AuthType } from './auth.type';
+
+import { Customer } from '../models/customer.model';
+import { CustomerService } from '../services/customer.service';
+import { AuthInput } from '../inputs/auth.input';
+import { AuthType } from '../common/auth.type';
 
 @Injectable()
 export class AuthService {

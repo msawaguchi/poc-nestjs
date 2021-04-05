@@ -1,9 +1,9 @@
-import { PurchaseModule } from './../purchase/purchase.module';
-import { Customer } from './customer.model';
+import { PurchaseModule } from '../modules/purchase.module';
+import { Customer } from '../models/customer.model';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module, forwardRef } from '@nestjs/common';
-import { CustomerService } from './customer.service';
-import { CustomerResolver } from './customer.resolver';
+import { CustomerService } from '../services/customer.service';
+import { CustomerResolver } from '../resolvers/customer.resolver';
 
 @Module({
   imports: [

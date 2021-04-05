@@ -1,10 +1,10 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { Purchase } from './purchase.model';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { CustomerService } from './../customer/customer.service';
-import { DeletePurchaseInput, PurchaseInput } from './purchase.input';
+import { Purchase } from '../models/purchase.model';
+import { CustomerService } from './customer.service';
+import { DeletePurchaseInput, PurchaseInput } from '../inputs/purchase.input';
 
 @Injectable()
 export class PurchaseService {

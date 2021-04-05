@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { AuthResolver } from './auth.resolver';
+import { AuthService } from '../services/auth.service';
+import { AuthResolver } from '../resolvers/auth.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Customer } from '../customer/customer.model';
-import { CustomerService } from '../customer/customer.service';
+import { Customer } from '../models/customer.model';
+import { CustomerService } from '../services/customer.service';
 import { JwtModule } from '@nestjs/jwt';
-import { JwtStrategy } from './jwt.strategy';
+import { JwtStrategy } from '../common/jwt.strategy';
 
 @Module({
   imports: [
