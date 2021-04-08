@@ -58,7 +58,7 @@ export class PurchaseController {
         city: message.value.customer.address.city,
         state: message.value.customer.address.state,
         street: message.value.customer.address.street,
-        experts: message.value.product.id === 'experts' ? 'access' : '',
+        experts_club: message.value.product.id === 'experts' ? 'access' : '',
         ignite: message.value.product.id === 'ignite' ? 'access' : '',
       });
     }

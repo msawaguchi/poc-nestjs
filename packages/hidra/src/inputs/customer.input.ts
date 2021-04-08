@@ -17,7 +17,7 @@ export class CustomerInput {
   @Field()
   readonly ignite?: string;
   @Field()
-  readonly experts?: string;
+  readonly experts_club?: string;
 }
 
 @InputType()

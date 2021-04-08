@@ -3,7 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PurchaseResolver } from './purchase.resolver';
 import { PurchaseService } from '../services/purchase.service';
 import { KafkaService } from '../services/kafka.service';
-import { PurchaseInput } from '../inputs/purchase.input';
+import { PurchaseInput, DeletePurchaseInput } from '../inputs/purchase.input';
 
 describe('PurchaseResolver', () => {
   let resolver: PurchaseResolver;
@@ -33,6 +33,11 @@ describe('PurchaseResolver', () => {
               id: '10',
               ...purchase,
               status: 'success',
+            })),
+            refund: jest.fn((refundData: DeletePurchaseInput) => ({
+              id: refundData.id,
+              customer_id: refundData.customer_id,
+              product_id: 'ignite',
             })),
             findByProduct: jest.fn((product_id: string) => [
               {
@@ -98,5 +103,13 @@ describe('PurchaseResolver', () => {
         },
       ]);
     });
+
+    // it('should refund purchase', async () => {
+    //   expect(await resolver.getRefund({ id: '1', customer_id: '1' })).toEqual({
+    //     id: '1',
+    //     customer_id: '1',
+    //     product_id: 'ignite',
+    //   });
+    // });
   });
 });

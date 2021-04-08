@@ -12,7 +12,6 @@ describe('CustomerResolver', () => {
         CustomerResolver,
         {
           provide: CustomerService,
-          // using a factory just because
           useFactory: () => ({
             findOne: jest.fn((id: { id: string }) => ({
               id,
@@ -53,7 +52,7 @@ describe('CustomerResolver', () => {
               street: data.email,
               city: data.city,
               state: data.state,
-              experts: data.experts,
+              experts: data.experts_club,
               ignite: data.ignite,
             })),
           }),
